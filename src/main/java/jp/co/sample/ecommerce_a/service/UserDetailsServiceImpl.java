@@ -43,6 +43,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		Collection<GrantedAuthority> authorityList =  new ArrayList<>();
 		authorityList.add(new SimpleGrantedAuthority("ROLE_MEMBER"));
 		
+//		if(user.isAdmin()) {
+//		authorityList.add(new SimpleGrantedAuthority("ROLE_ADMIN")); // 管理者権限付与
+//	}
+
+		
 		System.out.println("UserDetailsServiceImplのloadUserByUsernameが終了");
 		return new LoginUser(user,authorityList);
 	}

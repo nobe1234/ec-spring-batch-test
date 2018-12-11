@@ -105,4 +105,9 @@ public class User {
 		this.telephone = telephone;
 	}
 
+//	public boolean isAdmin() {
+//		// TODO Auto-generated method stub
+//		return false;
+//	}
+
 }

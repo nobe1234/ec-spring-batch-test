@@ -44,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests() // 認可に関する設定 TODO:permitAll()を下にする。
 				.antMatchers("/order/toOrder", "/order/toOrderComplete").authenticated() // ログインが必要なのは、注文確認画面のみ
+			//	.antMatchers("/admin/**").hasRole("ADMIN") // /admin/から始まるパスはADMIN権限でログインしている場合のみアクセス可(権限設定時の「ROLE_」を除いた文字列を指定)
 				.anyRequest().permitAll(); // それ以外のパスは認証が不要
 
 		http.formLogin() // ログインに関する設定
