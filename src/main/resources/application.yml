@@ -1,0 +1,20 @@
+spring:
+  mvc:  
+    view:  
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/ecommerce201810a
+    username: postgres
+    password: postgres
+    
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: noppeshan@gmail.com
+    password: yxqkkngpwzzpvkgh
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+    

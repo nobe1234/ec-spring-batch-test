@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+body{
+background-image: url("/img/pizza_simple.jpg");
+}
+h1{
+	color: red;
+	background-color: white;
+}

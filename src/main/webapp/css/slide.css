@@ -1,0 +1,155 @@
+@charset "UTF-8";
+
+.album {
+	margin: auto;
+	background-color: white;
+	position: relative;
+}
+
+.album img {
+	width: 30%;
+	height : 30%;
+	animation-name: album;
+	-webkit-animation-name: album;
+	animation-duration: 4s;
+	-webkit-animation-duration: 4s;
+	animation-iteration-count: infinite;
+	-webkit-animation-iteration-count: infinite;
+	opacity: 0;
+}
+
+.album .img1 {
+	display: block;
+	margin: 0 auto;
+}
+
+.album .img2 {
+	animation-delay:1s;
+	-webkit-animation-delay:1s;
+	position: absolute;
+	top: 0;
+	left: 25%;
+}
+.album .img3 {
+	animation-delay:2s;
+	-webkit-animation-delay:2s;
+	position: absolute;
+	top: 0;
+	left: 25%;
+}
+.album .img4 {
+	animation-delay:3s;
+	-webkit-animation-delay:3s;
+	position: absolute;
+	top: 0;
+	left: 25%;
+}
+
+@keyframes album {
+	0% {
+		opacity: 0;
+	}
+	
+	6.25% {
+		opacity: 1;
+	}
+
+	12.5% {
+		opacity: 1;
+	}
+	25% {
+		opacity: 0;
+	}
+}
+
+@-webkit-keyframes album {
+	0% {
+		opacity: 0;
+	}
+	
+	6.25% {
+		opacity: 1;
+	}
+
+	12.5% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+}
+
+/* ロード */
+.anime_test {
+    height:  200px;                         /* 高さ指定 */
+    width:  200px;                          /* 幅指定 */
+    border-radius:  50%;                    /* 角丸指定 */
+    background: linear-gradient(-90deg, #FF00A1, #F6FF00);  /* グラデーション指定 */
+    animation: anime 2s linear infinite;    /* アニメーション指定 */
+    position: relative;                     /* 位置指定 */
+}
+
+@keyframes anime {
+    0% {
+        transform: rotate(0deg);    /* 角度指定 */
+    }
+    100% {
+        transform: rotate(360deg);  /* 角度指定 */
+    }
+}
+
+.anime_test:before {
+    content: "";      /* 空の要素を作る */
+    height:  180px;             /* 高さ指定 */
+    width:  180px;              /* 幅指定 */
+    display:  block;            /* ブロック要素にする */
+    background-color:  #fff;    /* 背景色指定 */
+    border-radius: 50%;         /* 角丸指定 */
+    margin: 0px auto;           /* 中央揃え */
+    position:  relative;        /* 位置指定 */
+    top: 10px;                  /* 位置指定 */
+}
+
+
+/* swing */
+@-moz-keyframes swing {
+0% { -moz-transform: rotate(0deg) }
+25% { -moz-transform: rotate(5deg); }
+50% { -moz-transform: rotate(0deg); }
+75% { -moz-transform: rotate(-5deg); }
+100% { -moz-transform: rotate(0deg); }
+}
+@-webkit-keyframes swing {
+0% { -webkit-transform: rotate(0deg); }
+25% { -webkit-transform: rotate(5deg); }
+50% { -webkit-transform: rotate(0deg); }
+75% { -webkit-transform: rotate(-5deg); }
+100% { -webkit-transform: rotate(0deg); }
+}    
+@-o-keyframes swing {
+0% { -o-transform: rotate(0deg); }
+25% { -o-transform: rotate(5deg); }
+50% { -o-transform: rotate(0deg); }
+75% { -o-transform: rotate(-5deg); }
+100% { -o-transform: rotate(0deg); }
+}
+@keyframes swing {
+0% { transform: rotate(0deg); }
+25% { transform: rotate(5deg); }
+50% { transform: rotate(0deg); }
+75% { transform: rotate(-5deg); }
+100% { transform: rotate(0deg); }
+}
+ 
+.swing {
+    -moz-animation: swing linear 0.5s infinite;
+    -moz-transform-origin:  27% 82%;
+    -webkit-animation: swing linear 0.5s infinite;
+    -webkit-transform-origin: 27% 82%;
+    -ms-animation: swing linear 0.5s infinite;
+    -ms-transform-origin: 27% 82%;
+    -o-animation: swing linear 0.5s infinite;
+    -o-transform-origin: 27% 82%;
+    animation: swing linear 0.5s infinite;
+    transform-origin:  27% 82%;
+}
