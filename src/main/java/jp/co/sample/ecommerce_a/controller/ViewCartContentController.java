@@ -60,6 +60,8 @@ public class ViewCartContentController {
 			model.addAttribute("order", order);
 		}
 
+		// TODO:JSPとここのorderの動きを確認。orderItemが一件もないのに「カートに商品がありません」と出なかったらおかしい
+		// もしかしたらJSPのforeach文の箇所をうまくいじればなんとかなるかもしれない。そもそもorderはなくならないのだから、orderITemで判定すれば良いのでは？？
 		System.out.println("viewCartContent" + order);
 
 		return "cart";
