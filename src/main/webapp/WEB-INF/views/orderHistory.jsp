@@ -112,7 +112,7 @@
 
 		<button type="button"
 			onclick="location.href='${pageContext.request.contextPath}/downloadCsv/outputOrderHistoryCsv'">
-			ユーザー履歴一括ダウンロード(csv)</button>
+			発注履歴一括ダウンロード(csv)</button>
 
 	</div>
 

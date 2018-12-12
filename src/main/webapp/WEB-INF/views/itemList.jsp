@@ -87,7 +87,9 @@
 							<c:otherwise>
 								<c:out value="${userName}" />&nbsp;さん
 								<a href="${pageContext.request.contextPath}/logout"
-									class="navbar-link">ログアウト</a>
+									class="navbar-link">ログアウト</a>&nbsp;&nbsp;
+								<a href="${pageContext.request.contextPath}/orderHistory/"
+									class="navbar-link">注文履歴</a>
 							</c:otherwise>
 						</c:choose>
 					</p>

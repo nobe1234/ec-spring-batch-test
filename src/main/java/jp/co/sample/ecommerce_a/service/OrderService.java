@@ -90,7 +90,7 @@ public class OrderService {
 	public List<String> ExportUserOrderHistory(@AuthenticationPrincipal LoginUser loginUser) {
 		// ログインしているユーザーのIDを取り出し、ユーザー分のみの情報を取得する。
 		Integer userId = userService.loginCheckUser(loginUser);
-		List<Order> orderList = orderRepository.findByOwnAllOrder(userId);
+		List<Order> orderList = orderRepository.findByOwnAllOrder(userId, true);
 
 		// 返す出力文字列
 		List<String> outputList = new ArrayList<>();
@@ -142,11 +142,13 @@ public class OrderService {
 	/**
 	 * ユーザーリポジトリから注文履歴検索メソッドを呼び出し、返すメソッド.
 	 * 
+	 * 結合フラグをfalseにした場合、注文テーブルの簡単な履歴のみを表示する。
+	 * 
 	 * @param userId
 	 * @return ユーザー自身の注文履歴
 	 */
 	public List<Order> findByOwnAllOrder(Integer userId) {
-		return orderRepository.findByOwnAllOrder(userId);
+		return orderRepository.findByOwnAllOrder(userId, false);
 	}
 
 }

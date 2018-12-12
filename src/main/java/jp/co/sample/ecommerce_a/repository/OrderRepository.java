@@ -49,7 +49,7 @@ public class OrderRepository {
 		Order order = new Order();
 		order.setId(rs.getInt("id"));
 		order.setUserId(rs.getInt("user_id"));
-//		order.setOrder_number(rs.getString("order_number"));
+		order.setOrder_number(rs.getString("order_number"));
 		order.setStatus(rs.getInt("status"));
 		order.setTotalPrice(rs.getInt("total_price"));
 		order.setOrderDate(rs.getDate("order_date"));
@@ -57,7 +57,7 @@ public class OrderRepository {
 		order.setDestinationEmail(rs.getString("destination_email"));
 		order.setDestinationZipcode(rs.getString("destination_zipcode"));
 		order.setDestinationAddress(rs.getString("destination_address"));
-		order.setDestinationTel(rs.getString("destination_tel")); // 追加
+		order.setDestinationTel(rs.getString("destination_tel"));
 		order.setDeliveryTime(rs.getTimestamp("delivery_time"));
 		order.setPaymentMethod(rs.getInt("payment_method"));
 		return order;
@@ -107,6 +107,7 @@ public class OrderRepository {
 				orderItem.setOrderId(rs.getInt("order_id"));
 				orderItem.setQuantity(rs.getInt("quantity"));
 				orderItem.setSize((rs.getString("size").toCharArray()[0]));
+				System.out.println(orderItem.getSize());
 				orderItem.setItem(item);
 				orderItem.setOrderToppingList(orderToppingList);
 
@@ -218,7 +219,7 @@ public class OrderRepository {
 	 * @param order 受け取った引数
 	 */
 	public Order updateReturn(Order order) {
-		String sql = "UPDATE orders SET user_id=:userId,status=:status,total_price=:totalPrice,order_date=:orderDate,destination_name=:destinationName,"
+		String sql = "UPDATE orders SET user_id=:userId,status=:status,order_number = :order_number,total_price=:totalPrice,order_date=:orderDate,destination_name=:destinationName,"
 				+ "destination_email=:destinationEmail,destination_zipcode=:destinationZipcode,destination_address=:destinationAddress,destination_tel=:destinationTel,"
 				+ "delivery_time=:deliveryTime,payment_method=:paymentMethod WHERE id = :id;";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
@@ -236,7 +237,7 @@ public class OrderRepository {
 	public Order findByUserIdAndStatus(Integer userId, Integer status) {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
 
-		String sql = "SELECT id,user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address, destination_tel,delivery_time,payment_method "
+		String sql = "SELECT id,user_id,order_number,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address, destination_tel,delivery_time,payment_method "
 				+ "FROM orders WHERE user_id=:userId AND status=:status";
 
 		List<Order> orderList = template.query(sql, param, FIND_ORDER_ROW_MAPPER);
@@ -322,26 +323,41 @@ public class OrderRepository {
 	/**
 	 * 指定されたユーザの全てのオーダーを取得する.
 	 * 
+	 * 「結合フラグ」により、取得データを制御する。
+	 * 
 	 * @return
 	 */
-	public List<Order> findByOwnAllOrder(Integer userId) {
-		String sql = "SELECT orders.id order_id,orders.order_number order_number,user_id, status, total_price, order_date, destination_name, destination_email, destination_zipcode, destination_address, destination_tel, delivery_time, payment_method, "
-				+ " orderItem.id orderItem_id, item_id, order_id, quantity, size,"
-				+ " item.id item_id, item.name item_name, description, item.price_m item_priceM, item.price_l item_priceL, image_path, deleted,"
-				+ " orderTopping.id orderTopping_id, topping_id, order_item_id,"
-				+ " topping.id topping_id, topping.name topping_name, topping.price_m topping_priceM, topping.price_l topping_priceL"
-				+ " FROM orders" + " LEFT OUTER JOIN order_items orderItem ON orders.id = orderItem.order_id"
-				+ " LEFT OUTER JOIN items item ON orderItem.item_id = item.id"
-				+ " LEFT OUTER JOIN order_toppings orderTopping ON orderItem.id = orderTopping.order_item_id"
-				+ " LEFT OUTER JOIN toppings topping ON orderTopping.topping_id = topping.id"
-				+ " WHERE user_id = :userId ORDER BY orders.order_number";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+	public List<Order> findByOwnAllOrder(Integer userId, boolean isJoin) {
+		if (isJoin) {
+			String sql = "SELECT orders.id order_id,orders.order_number order_number,user_id, status, total_price, order_date, destination_name, destination_email, destination_zipcode, destination_address, destination_tel, delivery_time, payment_method, "
+					+ " orderItem.id orderItem_id, item_id, order_id, quantity, size,"
+					+ " item.id item_id, item.name item_name, description, item.price_m item_priceM, item.price_l item_priceL, image_path, deleted,"
+					+ " orderTopping.id orderTopping_id, topping_id, order_item_id,"
+					+ " topping.id topping_id, topping.name topping_name, topping.price_m topping_priceM, topping.price_l topping_priceL"
+					+ " FROM orders" + " LEFT OUTER JOIN order_items orderItem ON orders.id = orderItem.order_id"
+					+ " LEFT OUTER JOIN items item ON orderItem.item_id = item.id"
+					+ " LEFT OUTER JOIN order_toppings orderTopping ON orderItem.id = orderTopping.order_item_id"
+					+ " LEFT OUTER JOIN toppings topping ON orderTopping.topping_id = topping.id"
+					+ " WHERE user_id = :userId ORDER BY orders.order_number";
+			SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 
-		List<Order> orderList = template.query(sql, param, ORDER_RESULT_SET_EXTRACTOR);
-		if (orderList.size() == 0) {
-			return null;
+			List<Order> orderList = template.query(sql, param, ORDER_RESULT_SET_EXTRACTOR);
+			if (orderList.size() == 0) {
+				return null;
+			}
+			return orderList;
+		} else {
+			// orderテーブルのみを引っ張ってくる
+			String sql = "SELECT id,user_id,order_number,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address, destination_tel,delivery_time,payment_method "
+					+ "FROM orders WHERE user_id = :userId"; // TODO:SQL文作成
+			SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+
+			List<Order> orderList = template.query(sql, param, FIND_ORDER_ROW_MAPPER);
+			if (orderList.size() == 0) {
+				return null;
+			}
+			return orderList;
 		}
-		return orderList;
 	}
 
 }
