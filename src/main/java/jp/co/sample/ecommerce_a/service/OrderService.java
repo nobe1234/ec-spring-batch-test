@@ -1,5 +1,6 @@
 package jp.co.sample.ecommerce_a.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,10 @@ public class OrderService {
 	 * 
 	 * @return CSV出力する文字列
 	 */
-	public String ExportAllOrder() {
+	public List<String> ExportAllOrder() {
 		List<Order> orderList = orderRepository.outputAllOrder();
 		// 返す出力文字列
+		List<String> outputList = new ArrayList<>();
 		String outputString = null;
 
 		// orderListの数だけ回す
@@ -67,8 +69,11 @@ public class OrderService {
 						+ "," + orderItemName + "," + orderItemPrice + "," + orderItemQuantity + "," + orderItemSubTotal
 						+ "," + totalPrice + "," + orderStatus + "\r\n";
 
+				outputList.add(outputString);
+
 			}
 		}
-		return outputString;
+
+		return outputList;
 	}
 }

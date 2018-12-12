@@ -59,12 +59,17 @@ public class DownloadCsvController {
 
 		// try-with-resources文を使うことでclose処理を自動化
 		try (PrintWriter pw = response.getWriter()) {
+			String csvColums = "orderNumber,name,email,zipCode,address,elephone,orderItemName,orderItemPrice,orderItemQuantity,orderItemSubTotal,totalPrice,orderStatus"
+					+ "\r\n";
+			pw.print(csvColums);
 
 			// 書き出し用の文字列はサービスクラスで生成。全てのオーダーを取り出して書き出している。
-			String outputString = orderSevice.ExportAllOrder();
+			List<String> outputStringList = orderSevice.ExportAllOrder();
 
 			// CSVファイルに書き込み
-			pw.print(outputString);
+			for (String outputString : outputStringList) {
+				pw.print(outputString);
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
