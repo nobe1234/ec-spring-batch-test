@@ -21,6 +21,8 @@ public class User {
 	private String address;
 	/** 電話番号 */
 	private String telephone;
+	/** 権限 */
+	private String role;
 
 	/**
 	 * ユーザ権限付与時に使用するコンストラクタ.
@@ -103,6 +105,14 @@ public class User {
 
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 //	public boolean isAdmin() {

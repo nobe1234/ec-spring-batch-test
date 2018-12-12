@@ -41,7 +41,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 		
 		Collection<GrantedAuthority> authorityList =  new ArrayList<>();
-		authorityList.add(new SimpleGrantedAuthority("ROLE_MEMBER"));
+		authorityList.add(new SimpleGrantedAuthority("ROLE_USER"));
 		authorityList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 		
 //		if(user.isAdmin()) {

@@ -18,6 +18,9 @@
 <title>全ての注文【管理者用ページ】</title>
 </head>
 <body>
+	<sec:authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()">
+		<!-- <sec:authentication var="userName" property="principal.user.name" /> -->
+		</sec:authorize>
 	<div class="container">
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
@@ -95,13 +98,11 @@
 									<td><c:out value="${user.name}" /></td>
 									</c:forEach> --%>
 								<td><c:out value="${order.destinationName}" />様</td>
-								<td>
-								<c:if test="${order.status == '0' }" >注文前</c:if>
-								<c:if test="${order.status == '1' }" >未入金</c:if>
-								<c:if test="${order.status == '2' }" >入金済</c:if>
-								<c:if test="${order.status == '3' }" >発送済</c:if>
-								<c:if test="${order.status == '9' }" >キャンセル</c:if>
-								</td>
+								<td><c:if test="${order.status == '0' }">注文前</c:if> <c:if
+										test="${order.status == '1' }">未入金</c:if> <c:if
+										test="${order.status == '2' }">入金済</c:if> <c:if
+										test="${order.status == '3' }">発送済</c:if> <c:if
+										test="${order.status == '9' }">キャンセル</c:if></td>
 								<td><fmt:formatNumber value="${order.totalPrice}"
 										pattern="###,###円" /></td>
 							</tr>
@@ -117,5 +118,6 @@
 			ユーザー情報一括ダウンロード(csv)</button>
 
 	</div>
+
 </body>
 </html>

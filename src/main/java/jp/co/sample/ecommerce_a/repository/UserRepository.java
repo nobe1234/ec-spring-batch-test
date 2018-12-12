@@ -42,13 +42,15 @@ public class UserRepository {
 	/**
 	 * ユーザ情報をDBに新規登録するメソッド.
 	 * 
+	 * 登録フォームからは一般ユーザーしか作成できない
+	 * 
 	 * @param ユーザ情報
 	 */
 	public void insert(User user) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(user);
 
-		String insertSql = "INSERT INTO users (name,email,password,zipcode,address,telephone) "
-				+ "VALUES(:name,:email,:password,:zipcode,:address,:telephone)";
+		String insertSql = "INSERT INTO users (name,email,password,zipcode,address,telephone,role) "
+				+ "VALUES(:name,:email,:password,:zipcode,:address,:telephone,'ROLE_USER')";
 		template.update(insertSql, param);
 
 	}
@@ -75,13 +77,13 @@ public class UserRepository {
 		}
 		return null;
 	}
-	
+
 	// FIXME:javadoc漏れ
 	public void deleteById(Integer id) {
 		String sql = "DELETE FROM users WHERE id = :id";
-		
+
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
-		
+
 		template.update(sql, param);
 	}
 
