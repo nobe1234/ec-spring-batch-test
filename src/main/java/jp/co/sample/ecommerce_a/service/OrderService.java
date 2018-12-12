@@ -76,4 +76,15 @@ public class OrderService {
 
 		return outputList;
 	}
+
+	/**
+	 * ユーザーリポジトリから注文履歴検索メソッドを呼び出し、返すメソッド.
+	 * 
+	 * @param userId
+	 * @return ユーザー自身の注文履歴
+	 */
+	public List<Order> findByOwnAllOrder(Integer userId) {
+		return orderRepository.findByOwnAllOrder(userId);
+	}
+
 }

@@ -319,4 +319,29 @@ public class OrderRepository {
 		return orderList;
 	}
 
+	/**
+	 * 指定されたユーザの全てのオーダーを取得する.
+	 * 
+	 * @return
+	 */
+	public List<Order> findByOwnAllOrder(Integer userId) {
+		String sql = "SELECT orders.id order_id,orders.order_number order_number,user_id, status, total_price, order_date, destination_name, destination_email, destination_zipcode, destination_address, destination_tel, delivery_time, payment_method, "
+				+ " orderItem.id orderItem_id, item_id, order_id, quantity, size,"
+				+ " item.id item_id, item.name item_name, description, item.price_m item_priceM, item.price_l item_priceL, image_path, deleted,"
+				+ " orderTopping.id orderTopping_id, topping_id, order_item_id,"
+				+ " topping.id topping_id, topping.name topping_name, topping.price_m topping_priceM, topping.price_l topping_priceL"
+				+ " FROM orders" + " LEFT OUTER JOIN order_items orderItem ON orders.id = orderItem.order_id"
+				+ " LEFT OUTER JOIN items item ON orderItem.item_id = item.id"
+				+ " LEFT OUTER JOIN order_toppings orderTopping ON orderItem.id = orderTopping.order_item_id"
+				+ " LEFT OUTER JOIN toppings topping ON orderTopping.topping_id = topping.id"
+				+ " WHERE user_id = :userId ORDER BY orders.order_number";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+
+		List<Order> orderList = template.query(sql, param, ORDER_RESULT_SET_EXTRACTOR);
+		if (orderList.size() == 0) {
+			return null;
+		}
+		return orderList;
+	}
+
 }
