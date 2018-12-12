@@ -278,9 +278,8 @@ public class OrderRepository {
 		return orderList.get(0);
 	}
 
-	// FIXME:javadoc漏れ
 	/**
-	 * 退会処理時にユーザー削除を行う.
+	 * 退会処理時に退会したユーザーの注文情報削除を行う.
 	 * 
 	 * @param ユーザーID
 	 */
@@ -288,6 +287,19 @@ public class OrderRepository {
 		String sql = "DELETE FROM orders WHERE user_id = :id";
 
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", userId);
+
+		template.update(sql, param);
+	}
+
+	/**
+	 * 指定されたステータスの注文情報削除を行う.
+	 * 
+	 * @param ユーザーID
+	 */
+	public void deleteByUserIdAndStatus(Integer userId, Integer status) {
+		String sql = "DELETE FROM orders WHERE user_id = :id AND status = :status ";
+
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", userId).addValue("status", status);
 
 		template.update(sql, param);
 	}
