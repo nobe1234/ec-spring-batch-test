@@ -1,6 +1,5 @@
 package jp.co.sample.ecommerce_a.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,16 +45,14 @@ public class DeleteCartContentController {
 
 		// もし、注文した商品を全て消した場合、注文テーブルも削除しなければならない。
 		Integer userId = userService.loginCheckUser(loginUser);
-		List<Order> orderList = new ArrayList<>();
-		orderList = orderRepository.findByOwnAllOrder(userId, false);
+		Order order = orderRepository.findOrderAndItemsByUserIdAndStatus(userId, 0);
 
-		List<OrderItem> orderItemList = null;
-		for (Order order : orderList) {
-			orderItemList = order.getOrderList();
-		}
+		List<OrderItem> orderItemList = order.getOrderList();
 
-		if (orderItemList == null) {
-			orderRepository.deleteByUserId(userId);
+		for (OrderItem orderItem : orderItemList) {
+			if (orderItem == null) {
+				orderRepository.deleteByUserIdAndStatus(userId, 0);
+			}
 		}
 
 		return "redirect:/viewCartContent/view";

@@ -1,5 +1,7 @@
 package jp.co.sample.ecommerce_a.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.sample.ecommerce_a.domain.LoginUser;
 import jp.co.sample.ecommerce_a.domain.Order;
+import jp.co.sample.ecommerce_a.domain.OrderItem;
 import jp.co.sample.ecommerce_a.domain.User;
 import jp.co.sample.ecommerce_a.repository.OrderRepository;
 
@@ -51,20 +54,12 @@ public class ViewCartContentController {
 
 		Integer status = 0;
 
-		// FIXME:testというコメントは後から見た人に混乱を与えそう
-		// test
 		Order order = orderRepository.findByUserIdAndStatusForShowCart(userId, status);
-//		System.out.println("----viewcartのorderid-----");
-//		System.out.println(order.getId());
-//		System.out.println("----viewcartのorderid-----");
-		// FIXME:不要なコメントはpush時は削除しましょう
-//		Order order = orderRepository.findByUserIdAndStatusForShowCart(user.getId(), 0);
+		List<OrderItem> orderItemList = order.getOrderList();
+		if (orderItemList != null) {
+			model.addAttribute("order", order);
+		}
 
-//		List<Order> orderList = orderRepository.findByUserIdAndStatusForShowCart(userId, status);
-//		List<OrderItem> orderList = order.getOrderList();
-//		System.out.println("orderList" + orderList);
-
-		model.addAttribute("order", order);
 		System.out.println("viewCartContent" + order);
 
 		return "cart";
