@@ -23,7 +23,9 @@ public class OrderService {
 	private OrderRepository orderRepository;
 
 	/**
-	 * @return
+	 * CSV出力用の文字列を作成するメソッド.
+	 * 
+	 * @return CSV出力する文字列
 	 */
 	public String ExportAllOrder() {
 		List<Order> orderList = orderRepository.outputAllOrder();
