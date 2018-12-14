@@ -64,18 +64,10 @@
 				<div class="collapse navbar-collapse"
 					id="bs-example-navbar-collapse-1">
 					<p class="navbar-text navbar-right">
-						<%-- <sec:authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()"> --%>
-						<sec:authorize access="isAuthenticated()">
-							<sec:authentication var="userRole" property="principal.user.role" />
-							<c:if test="${userRole == ROLE_ADMIN}">
-								<a href="${pageContext.request.contextPath}/downloadCsv/"
-									class="navbar-link">注文一覧【管理者】</a>&nbsp;&nbsp; </c:if>
-						</sec:authorize>
-						<a href="${pageContext.request.contextPath}/viewCartContent/view"
+						<a href="${pageContext.request.contextPath}/downloadCsv/"
+							class="navbar-link">注文一覧【管理者】</a> <a
+							href="${pageContext.request.contextPath}/viewCartContent/view"
 							class="navbar-link">ショッピングカート</a>&nbsp;&nbsp;
-						<%-- 						<a href="${pageContext.request.contextPath}/" class="navbar-link">注文履歴</a>&nbsp;&nbsp; --%>
-
-
 						<sec:authorize access=" isAuthenticated()">
 							<sec:authentication var="userName" property="principal.user.name" />
 						</sec:authorize>
