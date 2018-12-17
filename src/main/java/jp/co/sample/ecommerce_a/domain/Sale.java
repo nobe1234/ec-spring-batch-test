@@ -6,7 +6,7 @@ package jp.co.sample.ecommerce_a.domain;
  * @author soheinobe
  *
  */
-public class Sales {
+public class Sale {
 
 	/** id */
 	private Integer id;
