@@ -57,7 +57,7 @@ public class SalesRepository {
 	 * @return 売上リスト
 	 */
 	public List<Sale> findAll() {
-		String sql = "SELECT id,month_of_year ,year,monthly_price from sales where year = :year order by month_of_year;";
+		String sql = "SELECT id,month_of_year ,year,monthly_price from sales order by month_of_year;";
 
 		List<Sale> saleList = template.query(sql, SALE_ROW_MAPPER);
 
