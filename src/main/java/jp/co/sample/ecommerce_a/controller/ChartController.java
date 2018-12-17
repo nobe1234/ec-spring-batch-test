@@ -1,8 +1,18 @@
 package jp.co.sample.ecommerce_a.controller;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import jp.co.sample.ecommerce_a.domain.Sale;
+import jp.co.sample.ecommerce_a.form.ChartRequestForm;
+import jp.co.sample.ecommerce_a.service.SaleService;
 
 /**
  * グラフを表示するコントローラ.
@@ -14,6 +24,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ChartController {
 
+	@Autowired
+	private SaleService saleService;
+
+	/**
+	 * フォームを受け取るためのオブジェクトを生成する.
+	 * 
+	 * @return
+	 */
+	@ModelAttribute
+	public ChartRequestForm setUpForm() {
+		return new ChartRequestForm();
+	}
+
 	/**
 	 * グラフページを表示する.
 	 * 
@@ -21,15 +44,28 @@ public class ChartController {
 	 */
 	@RequestMapping("/")
 	public String index(Model model) {
-//		String label[] = { "a", "b", "c", "d", "e", "f", "g" };
+
+		Map<Integer, Integer> yearAndMonthlySaleMap = new LinkedHashMap<>();
+		final int MAX_QUANTITY = 2018;
+		for (int i = 2016; i <= MAX_QUANTITY; i++) {
+			List<Sale> saleList = saleService.findByYear(i);
+			for (Sale sale : saleList) {
+				Integer monthlySale = sale.getMonthlySales();
+				yearAndMonthlySaleMap.put(i, monthlySale);
+			}
+		}
+
+		model.addAttribute("yearAndMonthlySaleMap", yearAndMonthlySaleMap);
+
+//		List<Sale> saleList = saleService.findAll();
 //
-//		// 縦軸
-//		// 具体的な値です。int型で、この値も適当です。
-//		int point[] = { 5, 3, 7, 1, 8, 3, 4, };
-//
-//		// Modelに格納します。ビュー側でグラフ用の配列を受け取れるようにしておきます。
-//		model.addAttribute("label", label);
-//		model.addAttribute("point", point);
+//		List<Integer> monthlySaleList = new ArrayList<>();
+//		for (Sale sale : saleList) {
+//			Integer monthlySale = sale.getMonthlySales();
+//			monthlySaleList.add(monthlySale);
+//			model.addAttribute("monthlySaleList", monthlySaleList);
+//		}
+
 		return "chart/chart";
 	}
 }

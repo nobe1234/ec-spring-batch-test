@@ -23,6 +23,10 @@ public class SaleService {
 	@Autowired
 	private SalesRepository salesRepository;
 
+	public List<Sale> findByYear(Integer year) {
+		return salesRepository.findByYear(year);
+	}
+
 	/**
 	 * テーブル全件検索 売上.
 	 * 

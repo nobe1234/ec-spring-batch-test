@@ -32,6 +32,8 @@ public class SalesRepository {
 	private static final RowMapper<Sale> SALE_ROW_MAPPER = (rs, i) -> {
 		Sale sale = new Sale();
 		sale.setId(rs.getInt("id"));
+		sale.setMonthOfYear(rs.getInt("month_of_year"));
+		sale.setYear(rs.getInt("year"));
 		sale.setMonthlySales(rs.getInt("monthly_price"));
 		return sale;
 	};
