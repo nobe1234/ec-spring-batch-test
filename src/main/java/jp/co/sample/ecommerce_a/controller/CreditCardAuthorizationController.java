@@ -146,13 +146,9 @@ public class CreditCardAuthorizationController {
 
 		mailContent.append("\nご注文番号：" + order.getOrder_number());
 		mailContent.append("\n\nお届け先氏名：" + order.getDestinationName() + "様");
-		try {
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd （E）");
-			String mailOrderDate = format.format(orderDate);
-			mailContent.append("\nご注文日時：" + mailOrderDate);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd （E）");
+		String mailOrderDate = format.format(orderDate);
+		mailContent.append("\nご注文日時：" + mailOrderDate);
 		mailContent.append("\nご注文の合計金額：" + order.getTotalPrice() + "円");
 		mailContent.append("\nお届け日時：" + deliveryStr);
 		mailContent.append("\n\n またのご利用をお待ちしております。");
