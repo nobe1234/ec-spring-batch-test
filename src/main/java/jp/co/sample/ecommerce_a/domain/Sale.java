@@ -13,7 +13,7 @@ public class Sale {
 	/** 売上月 */
 	private Integer monthOfYear;
 	/** 売上年 */
-	private Integer year;
+	private String year;
 	/** 月間売上 */
 	private Integer MonthlySales;
 
@@ -39,11 +39,11 @@ public class Sale {
 		this.monthOfYear = monthOfYear;
 	}
 
-	public Integer getYear() {
+	public String getYear() {
 		return year;
 	}
 
-	public void setYear(Integer year) {
+	public void setYear(String year) {
 		this.year = year;
 	}
 

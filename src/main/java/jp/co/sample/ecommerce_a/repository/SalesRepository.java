@@ -33,7 +33,7 @@ public class SalesRepository {
 		Sale sale = new Sale();
 		sale.setId(rs.getInt("id"));
 		sale.setMonthOfYear(rs.getInt("month_of_year"));
-		sale.setYear(rs.getInt("year"));
+		sale.setYear(rs.getString("year"));
 		sale.setMonthlySales(rs.getInt("monthly_price"));
 		return sale;
 	};
@@ -44,7 +44,7 @@ public class SalesRepository {
 	 * @param year
 	 * @return 当年の売上リスト.
 	 */
-	public List<Sale> findByYear(Integer year) {
+	public List<Sale> findByYear(String year) {
 		String sql = "SELECT id,month_of_year ,year,monthly_price from sales where year = :year order by month_of_year;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("year", year);
 

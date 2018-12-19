@@ -1,5 +1,6 @@
 package jp.co.sample.ecommerce_a.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,21 @@ public class SaleService {
 	@Autowired
 	private SalesRepository salesRepository;
 
-	public List<Sale> findByYear(Integer year) {
-		return salesRepository.findByYear(year);
+	/**
+	 * 年数を受け取って、該当する年の月ごとの売上合計金額を返す.
+	 * 
+	 * @param year
+	 * @return
+	 */
+	public List<Integer> findByYear(String year) {
+		List<Sale> saleList = salesRepository.findByYear(year);
+		List<Integer> monthlySaleList = new ArrayList<>();
+		for (Sale sale : saleList) {
+			Integer monthlySale = sale.getMonthlySales();
+			monthlySaleList.add(monthlySale);
+		}
+
+		return monthlySaleList;
 	}
 
 	/**
