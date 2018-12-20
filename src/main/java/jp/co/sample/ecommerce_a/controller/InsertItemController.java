@@ -58,16 +58,6 @@ public class InsertItemController {
 	 */
 	@RequestMapping("/insert")
 	public String insertCart(InsertItemForm form, Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		// FIXME:不要なコメントはpush時は削除しましょう
-//		Order order = new Order();
-//		System.out.println(1 + "   " + order);
-//		System.out.println(user.getId());
-//		
-//		if(user.getId() != null) {
-//			order = orderRepository.findByUserIdAndStatus(user.getId(), 0);
-//		}
-
-//		User user = loginUser.getUser();
 
 		Integer userId;
 		if (loginUser == null) {
@@ -80,8 +70,6 @@ public class InsertItemController {
 		int status = 0;
 		int totalPrice = 0;
 
-//		System.out.println(user.getName());
-//		System.out.println(user.getId());
 
 		Order order = orderRepository.findByUserIdAndStatus(userId, status);
 

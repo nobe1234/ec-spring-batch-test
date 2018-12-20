@@ -46,7 +46,9 @@
 						<a href="${pageContext.request.contextPath}/help"
 							class="navbar-link" target=”_blank”>お困りの方はこちら</a>&nbsp;&nbsp; <a
 							href="${pageContext.request.contextPath}/showItem/index"
-							class="navbar-link">トップページへ</a>&nbsp;&nbsp;
+							class="navbar-link">トップページへ</a>&nbsp;&nbsp; <a
+							href="${pageContext.request.contextPath}/chart"
+							class="navbar-link"> 売上グラフ表示 </a>
 						<sec:authorize
 							access="hasRole('ROLE_MEMBER') and isAuthenticated()">
 							<sec:authentication var="userName" property="principal.user.name" />
@@ -113,6 +115,7 @@
 		<button type="button"
 			onclick="location.href='${pageContext.request.contextPath}/downloadCsv/outputOrderHistoryCsv'">
 			発注履歴一括ダウンロード(csv)</button>
+
 
 	</div>
 

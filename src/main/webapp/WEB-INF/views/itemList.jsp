@@ -22,7 +22,10 @@
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/js/cookie.js"></script>
 <script src="/js/productIntroduction.js"></script>
+<!-- <script src="/js/setCookie.js"></script> -->
+<!-- <script src="/js/recent.js"></script -->
 <script>
 	$(function() {
 		var names = [];
@@ -41,7 +44,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body>
+<body id="load">
 
 	<div class="container">
 		<nav class="navbar navbar-default">
@@ -92,12 +95,36 @@
 					</p>
 				</div>
 				<!-- /.navbar-collapse -->
+				<!-- /.container-fluid -->
+				<!-- 			<div id="result">
+				<script type="text/javascript">
+					var k = document.cookie;
+					k = k.replace('itemInfo=', '');
+					k = decodeURIComponent(k);
+					k = k.replace(/,/g, '');
+					$('#result').html(k);
+				</script> -->
 			</div>
-			<!-- /.container-fluid -->
 		</nav>
+		<c:if test="${cookieItemList != null }">
+			<p>最近見た商品</p>
+			<c:forEach items="${cookieItemList}" var="cookieItem"
+				varStatus="cookieStatus">
+				<img src="<c:out value="${cookieItem.imagePath}" />"
+					class="img-responsive img-rounded" width="400" height="300">
+				<c:out value="${cookieItem.name}"></c:out>
+			</c:forEach>
+		</c:if>
+
+		<!-- 	<script type="text/javascript">
+		alert('最近見た商品を読み込んでます');
+		load_recentlist();
+	</script>
+	<div id="recent_item"></div> -->
 		<div class="row">
 			<div
 				class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-10 col-xs-12">
+
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<div class="panel-title">商品を検索する</div>
@@ -158,11 +185,11 @@
 							<c:forEach var="item" items="${items}" varStatus="status">
 								<td><a
 									href="${pageContext.request.contextPath}/showItemDetail/detail?id=<c:out value="${item.id}"/>">
-										<img src="<c:out value="${item.imagePath}"/>"
+										<img src="<c:out value="${item.imagePath}" />"
 										class="img-responsive img-rounded" width="400" height="300"
 										id="<c:out value="${item.id}"/>"
 										title="<c:out value="${item.description}"/>">
-								</a><br> <a
+								</a><br> <a class="${item.name}"
 									href="${pageContext.request.contextPath}/showItemDetail/detail?id=<c:out value="${item.id}"/>">
 										<c:out value="${item.name}"></c:out><br>
 								</a><br> <span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp; <fmt:formatNumber

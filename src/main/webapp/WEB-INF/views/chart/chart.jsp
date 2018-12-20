@@ -37,14 +37,22 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
 	<script>
-		var sales;
+		//読み込まれて最初に呼ばれる処理
+		$(function() {
+			makeGraph(2018);
+		});
+		
 		function getGraph(select) {
 			$("#sales").text("");
 			// 選択された年を取得する
 			var idx = select.selectedIndex;
-			var year = select.options[idx].value;
+			year = select.options[idx].value;
+			makeGraph(year);
+		};
+
+		function makeGraph(year) {
 			$.ajax({
-				type : "post",
+				type : "get",
 				url : "http://localhost:8080/restResponseChart/post",
 				dataType : "json",
 				data : {
@@ -57,68 +65,69 @@
 					alert("失敗");
 				}
 			});
-
-			function success(data) {
-				var monthlySaleList = {
-					Jan : data[0],
-					Feb : data[1],
-					Mar : data[2],
-					Apr : data[3],
-					May : data[4],
-					Jun : data[5],
-					Jul : data[6],
-					Aug : data[7],
-					Sep : data[8],
-					Oct : data[9],
-					Nov : data[10],
-					Dec : data[11]
-				};
-
-				var ctx = document.getElementById("myLineChart");
-
-				if (myLineChart) { //sales??
-					myLineChart.destroy();
-				}
-
-				var myLineChart = new Chart(ctx, {
-					type : 'line',
-					data : {
-						labels : [ '1月', '2月', '3月', '4月', '5月', '6月', '7月',
-								'8月', '9月', '10月', '11月', '12月' ],
-						datasets : [ {
-							/* 実際の売上の値を入れていく */
-							label : '売上',
-							data : [ monthlySaleList.Jan, monthlySaleList.Feb,
-									monthlySaleList.Mar, monthlySaleList.Apr,
-									monthlySaleList.May, monthlySaleList.Jun,
-									monthlySaleList.Jul, monthlySaleList.Aug,
-									monthlySaleList.Sep, monthlySaleList.Oct,
-									monthlySaleList.Nov, monthlySaleList.Dec ], //ここにマップから取り出したList
-							borderColor : "rgba(255,0,0,1)",
-							backgroundColor : "rgba(0,0,0,0)"
-						} ],
-					},
-					options : {
-						title : {
-							display : true,
-							text : '年間売上'
-						},
-						scales : {
-							yAxes : [ {
-								ticks : {
-									suggestedMax : 15000,
-									suggestedMin : 0,
-									stepSize : 5000,
-									callback : function(value, index, values) {
-										return '¥' + value //TODO:円マーク　カンマ区切り
-									}
-								}
-							} ]
-						}
-					}
-				});
-			};
 		};
+
+		function success(data) {
+			var monthlySaleList = {
+				Jan : data[0],
+				Feb : data[1],
+				Mar : data[2],
+				Apr : data[3],
+				May : data[4],
+				Jun : data[5],
+				Jul : data[6],
+				Aug : data[7],
+				Sep : data[8],
+				Oct : data[9],
+				Nov : data[10],
+				Dec : data[11]
+			};
+
+			var ctx = document.getElementById("myLineChart");
+
+			if (myLineChart) { //sales??
+				myLineChart.destroy();
+			}
+
+			var myLineChart = new Chart(ctx, {
+				type : 'line',
+				data : {
+					labels : [ '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月',
+							'9月', '10月', '11月', '12月' ],
+					datasets : [ {
+						/* 実際の売上の値を入れていく */
+						label : '９９９９',
+						data : [ monthlySaleList.Jan, monthlySaleList.Feb,
+								monthlySaleList.Mar, monthlySaleList.Apr,
+								monthlySaleList.May, monthlySaleList.Jun,
+								monthlySaleList.Jul, monthlySaleList.Aug,
+								monthlySaleList.Sep, monthlySaleList.Oct,
+								monthlySaleList.Nov, monthlySaleList.Dec ], //ここにマップから取り出したList
+						borderColor : "rgba(255,0,0,1)",
+						backgroundColor : "rgba(0,0,0,0)"
+					} ],
+				},
+				options : {
+					title : {
+						display : true,
+						text : '年間売上'
+					},
+					scales : {
+						yAxes : [ {
+							ticks : {
+								suggestedMax : 15000,
+								suggestedMin : 0,
+								stepSize : 5000,
+								callback : function(value, index, values) {
+									return '¥' + value //TODO:円マーク　カンマ区切り
+								}
+							}
+						} ]
+					}
+				}
+			});
+		};
+
 	</script>
 </body>
 </html>
