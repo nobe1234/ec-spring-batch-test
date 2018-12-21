@@ -60,7 +60,18 @@ public class ShowItemDetailController {
 
 		BrowsingHistoryWithCookie browseCookie = new BrowsingHistoryWithCookie();
 		String itemId = "" + itemDetail.getId();
-		browseCookie.setCookie(request, response, "/", "cookie_itemId", itemId, 5 * 60);
+		browseCookie.setCookie(request, response, "/", "cookie_" + itemId, itemId, 5 * 60);
+
+		// cookieが５つ以上の場合は0番目を削除
+//		Cookie[] cookies = request.getCookies();
+//		cookies.toString();
+//		if (cookies.length >= 5) {
+//			// 配列からリストへの変換
+//			List<Cookie> cookieList = new LinkedList<Cookie>(Arrays.asList(cookies));
+//			System.out.println("cookieリストが以下の通り");
+//			System.out.println(cookieList);
+//			cookieList.remove(0);
+//		}
 
 		List<Topping> toppings = toppingRepository.findAllTopping();
 

@@ -108,12 +108,16 @@
 		</nav>
 		<c:if test="${cookieItemList != null }">
 			<p>最近見た商品</p>
-			<c:forEach items="${cookieItemList}" var="cookieItem"
-				varStatus="cookieStatus">
-				<img src="<c:out value="${cookieItem.imagePath}" />"
-					class="img-responsive img-rounded" width="400" height="300">
-				<c:out value="${cookieItem.name}"></c:out>
-			</c:forEach>
+			<table>
+				<tr>
+					<c:forEach items="${cookieItemList}" var="cookieItem"
+						varStatus="cookieStatus">
+						<td><img src="<c:out value="${cookieItem.imagePath}" />"
+							class="img-responsive img-rounded" width="200" height="150">
+							<c:out value="${cookieItem.name}"></c:out></td>
+					</c:forEach>
+				</tr>
+			</table>
 		</c:if>
 
 		<!-- 	<script type="text/javascript">

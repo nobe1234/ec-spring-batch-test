@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.sample.ecommerce_a.domain.Item;
 import jp.co.sample.ecommerce_a.repository.ItemRepository;
+import jp.co.sample.ecommerce_a.service.ItemService;
 
 /**
  * 商品情報を処理するコントローラー.
@@ -29,6 +30,9 @@ public class ShowItemController {
 	@Autowired
 	private ItemRepository itemRepository;
 
+	@Autowired
+	private ItemService itemService;
+
 	/**
 	 * 全商品情報を読み込み商品一覧ページへフォワード.
 	 * 
@@ -37,39 +41,78 @@ public class ShowItemController {
 	 */
 	@RequestMapping("/index")
 	public String index(Model model, HttpServletRequest request, String name) {
-//		BrowsingHistoryWithCookie browseCookie = new BrowsingHistoryWithCookie();
-//		String id = browseCookie.getCookie(request, name);
-		String id = null;
 		Cookie[] cookies = request.getCookies();
-		List<Item> cookieItemList = new ArrayList<>();
 		if (cookies != null) {
-			System.out.println("cookie取り出します");
-//			for (Cookie cookie : cookies) {
-//				if (cookie.getName().equals("cookie_itemId")) {
-//					id = cookie.getValue();
-//					Integer itemId = Integer.parseInt(id);
-//					Item item = itemRepository.load(itemId);
-//					cookieItemList.add(item);
-//				}
-//			}
-			// cookieの最新５つを取得したい
-//			for (int i = cookies.length; i <= (cookies.length - 4); i--) {
-				for (int i = 0; i < cookies.length; i++) {
-				Cookie cookie = cookies[i];
-				if (cookie.getName().equals("cookie_itemId")) {
-					id = cookie.getValue();
-					System.out.println(id);
-					Integer itemId = Integer.parseInt(id);
-					Item item = itemRepository.load(itemId);
-					cookieItemList.add(item);
-				}
-			}
+			List<Item> cookieItemList = SearchCookiesItem(request);
+			System.out.println("model");
+			System.out.println(cookieItemList.size());
 			model.addAttribute("cookieItemList", cookieItemList);
 		}
 
 		List<Item> items = itemRepository.findAll();
 		model.addAttribute("items", items);
 		return "itemList";
+	}
+
+	/**
+	 * cookieに保存されているIDから最近みた商品リストを作成するメソッド.
+	 * 
+	 * 最新５つを表示するため、cookieの数で分岐してある。
+	 * 
+	 * @param request
+	 * @param length
+	 * @return
+	 */
+	public List<Item> SearchCookiesItem(HttpServletRequest request) {
+		Cookie[] cookies = request.getCookies();
+		cookies.toString();
+		List<Item> cookieItemList = new ArrayList<>();
+		String id = null;
+		for (Cookie cookie : cookies) {
+			if (cookie.getName().startsWith("cookie_")) {
+				id = cookie.getValue();
+				Item item = itemService.loadWithCookieId(id);
+				cookieItemList.add(item);
+			}
+		}
+
+		// 毎回条件が変わってしまう。
+		// for文の中で動く変数を条件にしない
+		int x = cookieItemList.size();
+		System.out.println("引く前" + cookieItemList.size());
+		if (cookieItemList.size() > 5) {
+			for (int i = 1; i <= (x - 5); i++) {
+				cookieItemList.remove(0);
+				System.out.println(i + ":" + cookieItemList.size());
+			}
+		}
+		System.out.println("" + cookieItemList.size());
+
+//		if (cookies.length >= 5) {
+//			for (int i = cookies.length; i <= (cookies.length - 4); i--) {
+//				Cookie cookie = cookies[i];
+//				if (cookie.getName().startsWith("cookie_")) {
+//					id = cookie.getValue();
+//					Item item = itemService.loadWithCookieId(id);
+//					cookieItemList.add(item);
+//				}
+//			}
+//		}
+//
+//		if (cookies.length <= 4) {
+//			for (int i = 0; i <= cookies.length; i++) {
+//				Cookie cookie = cookies[i];
+//				if (cookie.getName().startsWith("cookie_")) {
+//					id = cookie.getValue();
+//					Item item = itemService.loadWithCookieId(id);
+//					cookieItemList.add(item);
+//				}
+//			}
+//		}
+
+		System.out.println("返す前");
+		System.out.println(cookieItemList.size());
+		return cookieItemList;
 	}
 
 	/**
