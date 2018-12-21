@@ -1,5 +1,7 @@
 package jp.co.sample.ecommerce_a.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,16 @@ public class ItemService {
 		Integer itemId = Integer.parseInt(id);
 		Item item = itemRepository.load(itemId);
 		return item;
+	}
+
+	/**
+	 * 指定された行までの商品を読み込むメソッド.
+	 * 
+	 * @param pageNumber
+	 * @return 9件までの商品
+	 */
+	public List<Item> findEveryNineItems(Integer pageNumber) {
+		return itemRepository.findEveryNineItems(pageNumber);
 	}
 
 }

@@ -34,7 +34,7 @@ public class ItemRepository {
 		item.setDeleted(rs.getBoolean("deleted"));
 		return item;
 	};
-	
+
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -48,7 +48,21 @@ public class ItemRepository {
 		List<Item> items = jdbcTemplate.query(sql, ITEM_ROW_MAPPER);
 		return items;
 	}
-	
+
+	/**
+	 * 9件ごとに商品を分けて読み込むメソッド.
+	 * 
+	 * ページング処理に使用。
+	 * 
+	 * @return
+	 */
+	public List<Item> findEveryNineItems(Integer pageNumber) {
+		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items LIMIT 9 OFFSET :pageNumber ORDER BY id;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("pageNumber", pageNumber);
+		List<Item> itemList = jdbcTemplate.query(sql, param, ITEM_ROW_MAPPER);
+		return itemList;
+	}
+
 	/**
 	 * 安い順で並び替え.
 	 * 
@@ -59,7 +73,7 @@ public class ItemRepository {
 		List<Item> items = jdbcTemplate.query(sql, ITEM_ROW_MAPPER);
 		return items;
 	}
-	
+
 	/**
 	 * 高い順で並び替え.
 	 * 
@@ -84,7 +98,7 @@ public class ItemRepository {
 		List<Item> items = jdbcTemplate.query(sql, param, ITEM_ROW_MAPPER);
 		return items;
 	}
-	
+
 	/**
 	 * 一つの商品の詳細を読み込むメソッド.
 	 * 
@@ -93,8 +107,8 @@ public class ItemRepository {
 	 */
 	public Item load(Integer id) {
 		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE id = :id ;";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("id",id);
-		Item itemDetail = jdbcTemplate.queryForObject(sql,param, ITEM_ROW_MAPPER);
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		Item itemDetail = jdbcTemplate.queryForObject(sql, param, ITEM_ROW_MAPPER);
 		return itemDetail;
 	}
 }

@@ -40,7 +40,7 @@ public class ShowItemController {
 	 * @return 商品一覧ページ
 	 */
 	@RequestMapping("/index")
-	public String index(Model model, HttpServletRequest request, String name) {
+	public String index(Model model, HttpServletRequest request, Integer pageNumber) {
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			List<Item> cookieItemList = SearchCookiesItem(request);
@@ -49,7 +49,8 @@ public class ShowItemController {
 			model.addAttribute("cookieItemList", cookieItemList);
 		}
 
-		List<Item> items = itemRepository.findAll();
+//		List<Item> items = itemRepository.findAll();
+		List<Item> items = itemService.findEveryNineItems(pageNumber);
 		model.addAttribute("items", items);
 		return "itemList";
 	}
