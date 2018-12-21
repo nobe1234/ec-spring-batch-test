@@ -57,7 +57,7 @@ public class ItemRepository {
 	 * @return
 	 */
 	public List<Item> findEveryNineItems(Integer pageNumber) {
-		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items LIMIT 9 OFFSET :pageNumber ORDER BY id;";
+		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY id LIMIT 9 OFFSET :pageNumber;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("pageNumber", pageNumber);
 		List<Item> itemList = jdbcTemplate.query(sql, param, ITEM_ROW_MAPPER);
 		return itemList;

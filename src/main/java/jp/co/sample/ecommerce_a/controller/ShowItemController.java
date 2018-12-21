@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.sample.ecommerce_a.domain.Item;
+import jp.co.sample.ecommerce_a.form.PageForm;
 import jp.co.sample.ecommerce_a.repository.ItemRepository;
 import jp.co.sample.ecommerce_a.service.ItemService;
 
@@ -34,6 +36,14 @@ public class ShowItemController {
 	private ItemService itemService;
 
 	/**
+	 * @return ページング番号を受け取るフォーム.
+	 */
+	@ModelAttribute
+	public PageForm setUpPageForm() {
+		return new PageForm();
+	}
+
+	/**
 	 * 全商品情報を読み込み商品一覧ページへフォワード.
 	 * 
 	 * @param model モデル
@@ -44,12 +54,16 @@ public class ShowItemController {
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			List<Item> cookieItemList = SearchCookiesItem(request);
-			System.out.println("model");
-			System.out.println(cookieItemList.size());
 			model.addAttribute("cookieItemList", cookieItemList);
 		}
 
 //		List<Item> items = itemRepository.findAll();
+		// pageNumberはoffsetの値なので、ページが始まる値、0,9,10？b
+		System.out.println(pageNumber);
+		if (pageNumber == null) {
+			// 初期アクセス時はページ番号がないはずなので、0を入れておく
+			pageNumber = 0;
+		}
 		List<Item> items = itemService.findEveryNineItems(pageNumber);
 		model.addAttribute("items", items);
 		return "itemList";
@@ -80,14 +94,14 @@ public class ShowItemController {
 		// 毎回条件が変わってしまう。
 		// for文の中で動く変数を条件にしない
 		int x = cookieItemList.size();
-		System.out.println("引く前" + cookieItemList.size());
+//		System.out.println("引く前" + cookieItemList.size());
 		if (cookieItemList.size() > 5) {
 			for (int i = 1; i <= (x - 5); i++) {
 				cookieItemList.remove(0);
-				System.out.println(i + ":" + cookieItemList.size());
+//				System.out.println(i + ":" + cookieItemList.size());
 			}
 		}
-		System.out.println("" + cookieItemList.size());
+//		System.out.println("" + cookieItemList.size());
 
 //		if (cookies.length >= 5) {
 //			for (int i = cookies.length; i <= (cookies.length - 4); i--) {
@@ -111,8 +125,8 @@ public class ShowItemController {
 //			}
 //		}
 
-		System.out.println("返す前");
-		System.out.println(cookieItemList.size());
+//		System.out.println("返す前");
+//		System.out.println(cookieItemList.size());
 		return cookieItemList;
 	}
 

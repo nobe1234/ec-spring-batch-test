@@ -210,6 +210,14 @@
 						</tr>
 					</tbody>
 				</table>
+				<form:form
+					action="${pageContext.request.contextPath}/showItem/index"
+					modelAttribute="pageForm">
+					<a href="${pageContext.request.contextPath}/showItem/index">
+						<button type="submit" name="pageNumber" value="0">1</button>
+						<button type="submit" name="pageNumber" value="10">2</button>
+					</a>
+				</form:form>
 			</div>
 		</div>
 		<!-- table end -->
