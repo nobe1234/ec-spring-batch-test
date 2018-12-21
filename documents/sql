@@ -88,15 +88,16 @@ insert into toppings values(27, 'ブラックオリーブ', 200, 300);
 insert into toppings values(28, 'チーズ増量', 200, 300);
 
 -- 注文
+DROP SEQUENCE IF EXISTS orders_id_seq cascade;
 drop table if exists orders cascade;
 
-CREATE SEQUENCE orders_id_seq
-START WITH 20181201
+CREATE SEQUENCE orders_order_number_seq
 INCREMENT BY 1
 ;
 
 create table orders (
   id serial primary key
+  , order_number text not null
   , user_id integer not null
   , status integer not null
   , total_price integer not null
