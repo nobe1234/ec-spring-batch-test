@@ -214,19 +214,21 @@
 				<script src="/js/clickedPaging.js"></script>
 				<form:form id="page1Form"
 					action="${pageContext.request.contextPath}/showItem/index"
-					modelAttribute="pageForm" name="pageForm" >
-<%-- 					 <a href="${pageContext.request.contextPath}/showItem/index"> 
- --%>						<form:button id="pageOneLink" type="submit" name="pageNumber" value="0" >1</form:button>
-						<form:button id="pageTwoLink" type="submit" name="pageNumber" value="10" >2</form:button>
+					modelAttribute="pageForm" name="pageForm">
+					<%-- 					 <a href="${pageContext.request.contextPath}/showItem/index"> 
+ --%>
+					<form:button id="pageOneLink" type="submit" name="pageNumber"
+						value="0">1</form:button>
+					<form:button id="pageTwoLink" type="button" name="pageNumber"
+						value="10">2</form:button>
 					<!-- 					</a> 
  -->
 				</form:form>
-<%-- 				<form:form id="page2Form"
+				<form:form id="page2Form"
 					action="${pageContext.request.contextPath}/showItem/index"
-					modelAttribute="pageForm" name="pageForm" >
-					<a href="${pageContext.request.contextPath}/showItem/index">
-					<!-- </a> -->
-				</form:form> --%>
+					modelAttribute="pageForm" name="pageForm">
+					<input type="hidden" id="pageTwoLink" name="pageNumber" value="10" >
+				</form:form>
 			</div>
 		</div>
 		<!-- table end -->
