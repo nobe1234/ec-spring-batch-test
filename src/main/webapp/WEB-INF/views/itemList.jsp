@@ -24,6 +24,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="/js/cookie.js"></script>
 <script src="/js/productIntroduction.js"></script>
+
 <!-- <script src="/js/setCookie.js"></script> -->
 <!-- <script src="/js/recent.js"></script -->
 <script>
@@ -210,14 +211,22 @@
 						</tr>
 					</tbody>
 				</table>
-				<form:form
+				<script src="/js/clickedPaging.js"></script>
+				<form:form id="page1Form"
 					action="${pageContext.request.contextPath}/showItem/index"
-					modelAttribute="pageForm">
-					<a href="${pageContext.request.contextPath}/showItem/index">
-						<button type="submit" name="pageNumber" value="0">1</button>
-						<button type="submit" name="pageNumber" value="10">2</button>
-					</a>
+					modelAttribute="pageForm" name="pageForm" >
+<%-- 					 <a href="${pageContext.request.contextPath}/showItem/index"> 
+ --%>						<form:button id="pageOneLink" type="submit" name="pageNumber" value="0" >1</form:button>
+						<form:button id="pageTwoLink" type="submit" name="pageNumber" value="10" >2</form:button>
+					<!-- 					</a> 
+ -->
 				</form:form>
+<%-- 				<form:form id="page2Form"
+					action="${pageContext.request.contextPath}/showItem/index"
+					modelAttribute="pageForm" name="pageForm" >
+					<a href="${pageContext.request.contextPath}/showItem/index">
+					<!-- </a> -->
+				</form:form> --%>
 			</div>
 		</div>
 		<!-- table end -->

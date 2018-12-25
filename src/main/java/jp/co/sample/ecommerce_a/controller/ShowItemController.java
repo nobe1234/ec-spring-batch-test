@@ -50,7 +50,7 @@ public class ShowItemController {
 	 * @return 商品一覧ページ
 	 */
 	@RequestMapping("/index")
-	public String index(Model model, HttpServletRequest request, Integer pageNumber) {
+	public String index(Model model, HttpServletRequest request, PageForm pageForm/** Integer pageNumber */) {
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			List<Item> cookieItemList = SearchCookiesItem(request);
@@ -58,7 +58,8 @@ public class ShowItemController {
 		}
 
 //		List<Item> items = itemRepository.findAll();
-		// pageNumberはoffsetの値なので、ページが始まる値、0,9,10？b
+		// pageNumberはoffsetの値なので、ページが始まる値、0,9,10？
+		Integer pageNumber = pageForm.getPageNumber();
 		System.out.println(pageNumber);
 		if (pageNumber == null) {
 			// 初期アクセス時はページ番号がないはずなので、0を入れておく
