@@ -71,7 +71,9 @@
 						<a href="${pageContext.request.contextPath}/downloadCsv/"
 							class="navbar-link">注文一覧【管理者】</a> <a
 							href="${pageContext.request.contextPath}/viewCartContent/view"
-							class="navbar-link">ショッピングカート</a>&nbsp;&nbsp;
+							class="navbar-link">ショッピングカート</a> <a
+							href="${pageContext.request.contextPath}/introductionCompany/index"
+							class="navbar-link">会社紹介</a>&nbsp;&nbsp;
 						<sec:authorize access=" isAuthenticated()">
 							<sec:authentication var="userName" property="principal.user.name" />
 						</sec:authorize>
