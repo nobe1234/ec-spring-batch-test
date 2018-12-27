@@ -13,6 +13,7 @@
 <title>ピザ屋のネット注文</title>
 <link href="../css/bootstrap.css" rel="stylesheet">
 <link href="../css/piza.css" rel="stylesheet">
+<link href="../css/form.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
@@ -214,23 +215,21 @@
 					</tbody>
 				</table>
 				<script src="/js/clickedPaging.js"></script>
-				<form:form id="page1Form"
-					action="${pageContext.request.contextPath}/showItem/index"
-					modelAttribute="pageForm" name="pageForm">
-					<%-- 					 <a href="${pageContext.request.contextPath}/showItem/index"> 
- --%>
-					<form:button id="pageOneLink" type="submit" name="pageNumber"
-						value="0">1</form:button>
-					<form:button id="pageTwoLink" type="button" name="pageNumber"
-						value="10">2</form:button>
-					<!-- 					</a> 
- -->
+				<div class="form_conf">
+					<form:form id="page1Form" method="get"
+						action="${pageContext.request.contextPath}/showItem/index"
+						modelAttribute="pageForm" name="pageForm">
+						<input id="pageOneLink" type="button" name="pageNumber" value="1">
+						<input id="pageNumber1" type="hidden" name="pageNumber" value="0">
+				
 				</form:form>
-				<form:form id="page2Form"
-					action="${pageContext.request.contextPath}/showItem/index"
-					modelAttribute="pageForm" name="pageForm">
-					<input type="hidden" id="pageTwoLink" name="pageNumber" value="10" >
-				</form:form>
+					<form:form id="page2Form" method="get"
+						action="${pageContext.request.contextPath}/showItem/index"
+						modelAttribute="pageForm" name="pageForm">
+						<input id="pageNumber2" type="hidden" name="pageNumber" value="10">
+						<input id="pageTwoLink" type="button" name="pageNumber" value="2">
+					</form:form>
+				</div>
 			</div>
 		</div>
 		<!-- table end -->

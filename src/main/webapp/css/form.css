@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+.form_conf {
+	text-align: center;
+}
+
+#page1Form {
+	display: inline-block;
+	margin: 0 10px;
+}
+
+#page2Form {
+	display: inline-block;
+	margin: 0 10px;
+}

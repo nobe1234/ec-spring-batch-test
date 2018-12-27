@@ -52,7 +52,7 @@
 
 		function makeGraph(year) {
 			$.ajax({
-				type : "get",
+				type : "post",
 				url : "http://localhost:8080/restResponseChart/post",
 				dataType : "json",
 				data : {
