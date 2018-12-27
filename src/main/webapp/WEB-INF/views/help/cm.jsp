@@ -5,18 +5,27 @@
 <head>
 <meta charset="UTF-8">
 <title>新商品紹介ページ</title>
-<!-- <link href="../css/bootstrap.css" rel="stylesheet">
-<link href="../css/background.css" rel="stylesheet">
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<!-- google map api の読み込み　-->
+<script
+	src="http://maps.google.com/maps/api/js?key=AIzaSyCPf8hSiGkp9kp2dWNE1YRfItypWdKNjXI&language=ja"></script>
+<style>
+html {
+	height: 100%
+}
 
-<script type="text/javascript" src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
-<link rel="stylesheet" type="text/css" href="/path/to/modal-video.css">
-<!-- <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
-<script src="/path/to/modal-video.js"></script> -->
+body {
+	height: 100%
+}
+
+#map {
+	height: 70%;
+	width: 70%
+}
+</style>
+
 </head>
 <body>
 	<div class="container">
@@ -51,8 +60,6 @@
 			src="http://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=http://example.com"
 			frameborder="0" /> -->
 
-		<div id="player"></div>
-		<div id="player"></div>
 		<div id="player"></div>
 		<script>
 			// 2. This code loads the IFrame Player API code asynchronously.
@@ -99,11 +106,34 @@
 			} */
 		</script>
 
-
-
-
-
 	</div>
+
+
+	<div id="map"></div>
+	<script>
+		var MyLatLng = new google.maps.LatLng(35.689766, 139.704101);
+		var Options = {
+			zoom : 16, //地図の縮尺値
+			center : MyLatLng, //地図の中心座標
+			mapTypeId : 'roadmap' //地図の種類
+		};
+		var map = new google.maps.Map(document.getElementById('map'), Options);
+
+		/* マーカー */
+		var marker = new google.maps.Marker({
+			position : MyLatLng,
+			map : map,
+			title : 'ラクスパートナーズ本社',
+			icon : new google.maps.MarkerImage('/img/piza.jpg',//マーカー画像URL
+			new google.maps.Size(80, 80),//マーカー画像のサイズ
+			new google.maps.Point(40, 60),//マーカー画像表示の起点（変更しない）
+			new google.maps.Point(30, 80)//マーカー位置の調整
+			)
+		});
+	</script>
+
+
+
 
 
 </body>
